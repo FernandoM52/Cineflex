@@ -7,11 +7,11 @@ import SuccessPage from "./pages/SuccessPage/SuccessPage"
 export default function App() {
     return (
         <>
-           <NavContainer>CINEFLEX</NavContainer>
+            <NavContainer>CINEFLEX</NavContainer>
 
-            {/* <HomePage /> */}
+            {<HomePage />}
             {/* <SeatsPage /> */}
-            <SessionsPage />
+            {/*<SessionsPage />*/}
             {/* <SuccessPage /> */}
         </>
     )
