@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
     const [listaFilmes, setListaFilmes] = useState([]);
@@ -20,13 +21,14 @@ export default function HomePage() {
 
             <ListContainer>
                 {listaFilmes.map(f => (
-
-                    <MovieContainer key={f.id} data-test="movie">
-                        <img src={f.posterURL} alt={f.id} />
-                    </MovieContainer>
-
-                ))}
-            </ListContainer>
+                    <Link to="/sessoes/37" key={f.id}>
+                        <MovieContainer data-test="movie" >
+                            <img src={f.posterURL} alt={f.id} />
+                        </MovieContainer>
+                    </Link>
+                ))
+                }
+            </ListContainer >
 
         </PageContainer >
     )
@@ -62,5 +64,8 @@ const MovieContainer = styled.li`
     img {
         width: 130px;
         height: 190px;
+    }
+    &:hover{
+        background-color: #E8833A;
     }
 `
