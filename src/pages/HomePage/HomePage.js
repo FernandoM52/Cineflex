@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { PageContainer, ListContainer, MovieContainer } from "./styleHomePage";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
@@ -8,64 +8,25 @@ export default function HomePage() {
 
     useEffect(() => {
         const url = "https://mock-api.driven.com.br/api/v8/cineflex/movies";
-        const requisiacao = axios.get(url);
-
-        requisiacao.then((res) => { setListaFilmes(res.data) });
-        requisiacao.catch((err) => { console.log(err.response.data) });
-    }, [])
-    console.log(listaFilmes)
+        const promessa = axios.get(url);
+        promessa.then(res => { setListaFilmes(res.data) });
+        promessa.catch(err => { console.log(err.response.data) });
+    }, []);
 
     return (
         <PageContainer>
             Selecione o filme
 
             <ListContainer>
-                {listaFilmes.map(f => (
-                    <Link to="/sessoes/37" key={f.id}>
+                {listaFilmes.map((f) => (
+                    <Link to={`/sessoes/37/${f.id}`} key={f.id}>
                         <MovieContainer data-test="movie" >
                             <img src={f.posterURL} alt={f.id} />
                         </MovieContainer>
                     </Link>
-                ))
-                }
+                ))}
             </ListContainer >
 
         </PageContainer >
-    )
-}
-
-const PageContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Roboto';
-    font-size: 24px;
-    text-align: center;
-    color: #293845;
-    margin-top: 30px;
-    padding-top: 70px;
-`
-const ListContainer = styled.ul`
-    width: 330px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    padding: 10px;
-`
-const MovieContainer = styled.li`
-    width: 145px;
-    height: 210px;
-    box-shadow: 0px 2px 4px 2px #0000001A;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
-    img {
-        width: 130px;
-        height: 190px;
-    }
-    &:hover{
-        background-color: #E8833A;
-    }
-`
+    );
+};
