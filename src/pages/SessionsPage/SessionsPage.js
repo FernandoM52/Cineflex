@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { PageContainer, SessionContainer, ButtonsContainer, FooterContainer } from "./styleSessionsPage";
@@ -21,19 +21,23 @@ export default function SessionsPage({ sessions, setSessions }) {
                 {sessions && sessions.days && sessions.days.map((s) => (
                     <SessionContainer data-test="movie-day" key={s.id}>
                         {s.weekday} - {s.date}
+
                         <ButtonsContainer>
                             {s.showtimes.map((h) => (
-                                <button data-test="showtime" key={h.id}>
-                                    {h.name}
-                                </button>
+                                <Link to={`/assentos/${h.id}`} key={h.id}>
+                                    <button data-test="showtime">
+                                        {h.name}
+                                    </button>
+                                </Link>
                             ))}
                         </ButtonsContainer>
+
                     </SessionContainer>
                 ))}
             </div>
 
-            <FooterContainer data-test="footer">
-                <div>
+            <FooterContainer>
+                <div data-test="footer">
                     <img src={sessions.posterURL} alt={sessions.title} />
                 </div>
                 <div>
