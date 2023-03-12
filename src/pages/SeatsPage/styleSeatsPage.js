@@ -67,7 +67,7 @@ export const CaptionItem = styled.div`
 
 export const SeatItem = styled.div`
     border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    background-color: ${({ selected }) => selected ? "#1AAE9E" : "#C3CFD9"};    // Essa cor deve mudar
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -77,6 +77,9 @@ export const SeatItem = styled.div`
     align-items: center;
     justify-content: center;
     margin: 5px 3px;
+    &:hover{
+        cursor: pointer;
+    }
 `;
 
 export const FooterContainer = styled.div`

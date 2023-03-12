@@ -11,7 +11,7 @@ export default function SessionsPage({ sessions, setSessions }) {
         const promessa = axios.get(url);
         promessa.then(res => setSessions(res.data));
         promessa.catch(err => console.log(err.response.data));
-    }, []);
+    }, [idFilme]);
 
     return (
         <PageContainer>
@@ -36,8 +36,8 @@ export default function SessionsPage({ sessions, setSessions }) {
                 ))}
             </div>
 
-            <FooterContainer>
-                <div data-test="footer">
+            <FooterContainer data-test="footer">
+                <div>
                     <img src={sessions.posterURL} alt={sessions.title} />
                 </div>
                 <div>
