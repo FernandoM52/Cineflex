@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { PageContainer, SeatsContainer, FormContainer, CaptionContainer, CaptionCircle, CaptionItem, SeatItem, FooterContainer } from "./styleSeatsPage";
+import { PageContainer, SeatsContainer, FormContainer, CaptionContainer, CaptionCircle, CaptionItem, SeatItem, FooterContainer, Loading } from "./styleSeatsPage";
+import loading from "../../assets/loading.gif";
 
 export default function SeatsPage() {
     const [seats, setSeats] = useState(undefined);
@@ -17,14 +18,14 @@ export default function SeatsPage() {
 
 
     if (seats === undefined) {
-        return <div>Carregando...</div>
+        return <Loading src={loading} />
     }
 
     function selectSeatClick(seat) {
         const isSelected = selectedSeats.includes(seat.id);
 
         if (seat.isAvailable === false) {
-            alert("Este assento está indisponível");
+            alert("Esse assento não está disponível.");
         }
         if (!isSelected && seat.isAvailable === true) {
             setSelectedSeats([...selectedSeats, seat.id]);
@@ -32,8 +33,6 @@ export default function SeatsPage() {
             setSelectedSeats(selectedSeats.filter(id => id !== seat.id));
         }
     }
-
-    console.log(selectedSeats)
 
     return (
         <PageContainer>
@@ -46,6 +45,7 @@ export default function SeatsPage() {
                         data-test="seat"
                         onClick={() => selectSeatClick(s)}
                         selected={selectedSeats.includes(s.id)}
+                        available={s.isAvailable}
                     >
                         {s.name}
                     </SeatItem>
@@ -54,15 +54,15 @@ export default function SeatsPage() {
 
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle borderColor="#0E7D71" backgroundColor="#1AAE9E" />
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle borderColor="#7B8B99" backgroundColor="#C3CFD9" />
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle borderColor="#F7C52B" backgroundColor="#FBE192" />
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>

@@ -37,3 +37,7 @@ export const MovieContainer = styled.li`
         background-color: #E8833A;
     }
 `;
+
+export const Loading = styled.img`
+width: 100%;
+`;

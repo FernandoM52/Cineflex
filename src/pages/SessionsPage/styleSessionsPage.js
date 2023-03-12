@@ -78,3 +78,7 @@ export const FooterContainer = styled.div`
         }
     }
 `;
+
+export const Loading = styled.img`
+width: 100%;
+`;

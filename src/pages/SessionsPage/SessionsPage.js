@@ -1,9 +1,11 @@
-import { Link, useParams } from "react-router-dom";
-import { useEffect } from "react";
 import axios from "axios";
-import { PageContainer, SessionContainer, ButtonsContainer, FooterContainer } from "./styleSessionsPage";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { PageContainer, SessionContainer, ButtonsContainer, FooterContainer, Loading } from "./styleSessionsPage";
+import loading from "../../assets/loading.gif";
 
-export default function SessionsPage({ sessions, setSessions }) {
+export default function SessionsPage() {
+    const [sessions, setSessions] = useState(undefined);
     const { idFilme } = useParams();
 
     useEffect(() => {
@@ -13,12 +15,16 @@ export default function SessionsPage({ sessions, setSessions }) {
         promessa.catch(err => console.log(err.response.data));
     }, [idFilme]);
 
+    if (sessions === undefined) {
+        return <Loading src={loading} />
+    }
+
     return (
         <PageContainer>
             Selecione o horário
 
             <div>
-                {sessions && sessions.days && sessions.days.map((s) => (
+                {sessions.days.map((s) => (
                     <SessionContainer data-test="movie-day" key={s.id}>
                         {s.weekday} - {s.date}
 

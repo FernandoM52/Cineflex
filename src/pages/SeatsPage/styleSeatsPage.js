@@ -47,8 +47,8 @@ export const CaptionContainer = styled.div`
 `;
 
 export const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: 1px solid ${({ borderColor }) => borderColor};          // Essa cor deve mudar
+    background-color: ${({ backgroundColor }) => backgroundColor};  // Essa cor deve mudar
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -66,8 +66,8 @@ export const CaptionItem = styled.div`
 `;
 
 export const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: ${({ selected }) => selected ? "#1AAE9E" : "#C3CFD9"};    // Essa cor deve mudar
+    border: 1px solid ${({ selected, available }) => selected ? "#0E7D71" : available ? "#808F9D" : "#F7C52B"}; ;  // Essa cor deve mudar
+    background-color: ${({ selected, available }) => selected ? "#1AAE9E" : available ? "#C3CFD9" : "#FBE192"};    // Essa cor deve mudar
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -119,4 +119,8 @@ export const FooterContainer = styled.div`
             }
         }
     }
+`;
+
+export const Loading = styled.img`
+width: 100%;
 `;
