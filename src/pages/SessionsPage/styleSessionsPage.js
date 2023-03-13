@@ -80,5 +80,9 @@ export const FooterContainer = styled.div`
 `;
 
 export const Loading = styled.img`
-width: 100%;
+margin: 0 auto;
+height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
 `;

@@ -23,7 +23,7 @@ export const SeatsContainer = styled.div`
     margin-top: 20px;
 `;
 
-export const FormContainer = styled.div`
+export const FormContainer = styled.form`
     width: calc(100vw - 40px); 
     display: flex;
     flex-direction: column;
@@ -32,6 +32,7 @@ export const FormContainer = styled.div`
     font-size: 18px;
     button {
         align-self: center;
+        cursor: pointer;
     }
     input {
         width: calc(100vw - 60px);
@@ -122,5 +123,9 @@ export const FooterContainer = styled.div`
 `;
 
 export const Loading = styled.img`
-width: 100%;
+margin: 0 auto;
+height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
 `;

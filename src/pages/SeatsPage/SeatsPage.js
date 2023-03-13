@@ -6,7 +6,10 @@ import loading from "../../assets/loading.gif";
 
 export default function SeatsPage() {
     const [seats, setSeats] = useState(undefined);
-    const [selectedSeats, setSelectedSeats] = useState([]);
+    const [ids, setIds] = useState([]);
+    const [name, setName] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [formValid, setFormValid] = useState(false);
     const { idSessao } = useParams();
 
     useEffect(() => {
@@ -16,23 +19,48 @@ export default function SeatsPage() {
         promisse.catch(err => console.log(err.response.data));
     }, [idSessao]);
 
-
     if (seats === undefined) {
         return <Loading src={loading} />
-    }
+    };
 
     function selectSeatClick(seat) {
-        const isSelected = selectedSeats.includes(seat.id);
+        const isSelected = ids.includes(seat.id);
 
         if (seat.isAvailable === false) {
             alert("Esse assento não está disponível.");
         }
         if (!isSelected && seat.isAvailable === true) {
-            setSelectedSeats([...selectedSeats, seat.id]);
+            setIds([...ids, seat.id]);
         } else {
-            setSelectedSeats(selectedSeats.filter(id => id !== seat.id));
+            setIds(ids.filter(id => id !== seat.id));
         }
-    }
+    };
+
+    function validateCpf(e) {
+        const cpfValue = e.target.value.replace(/[^\d]/g, "");
+
+        if (cpfValue.length !== 11) {
+            setFormValid(false);
+        } else {
+            setFormValid(!!name && !!cpfValue);
+        }
+
+        setCpf(cpfValue);
+    };
+
+    function reserveSeats(e) {
+        e.preventDefault();
+        const urlPost = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
+        const postObject = { ids, name, cpf };
+
+        if (formValid && ids.length > 0) {
+            const promisse = axios.post(urlPost, postObject);
+            promisse.then(res => alert("Assentos foram reservados"))
+            promisse.catch(err => console.log(err.response.data));
+        } else {
+            alert("Verifique se os campos estão preenchidos corretamente e se foi selecionado um assento dispnível.");
+        }
+    };
 
     return (
         <PageContainer>
@@ -44,7 +72,7 @@ export default function SeatsPage() {
                         key={s.id}
                         data-test="seat"
                         onClick={() => selectSeatClick(s)}
-                        selected={selectedSeats.includes(s.id)}
+                        selected={ids.includes(s.id)}
                         available={s.isAvailable}
                     >
                         {s.name}
@@ -67,14 +95,33 @@ export default function SeatsPage() {
                 </CaptionItem>
             </CaptionContainer>
 
-            <FormContainer>
-                Nome do Comprador:
-                <input placeholder="Digite seu nome..." data-test="client-name" />
+            <FormContainer onSubmit={reserveSeats}>
+                <label htmlFor="name">Nome do Comprador:</label>
+                <input
+                    data-test="client-name"
+                    id="name"
+                    placeholder="Digite seu nome..."
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(e) => {
+                        setName(e.target.value);
+                        setFormValid(!!cpf && !!e.target.value);
+                    }}
+                />
 
-                CPF do Comprador:
-                <input placeholder="Digite seu CPF..." data-test="client-cpf" />
+                <label htmlFor="cpf">CPF do Comprador:</label>
+                <input
+                    data-test="client-cpf"
+                    id="cpf"
+                    placeholder="Digite seu CPF..."
+                    type="text"
+                    required
+                    value={cpf}
+                    onChange={validateCpf}
+                />
 
-                <button data-test="book-seat-btn">Reservar Assento(s)</button>
+                <button type="submit" data-test="book-seat-btn">Reservar Assento(s)</button>
             </FormContainer>
 
             <FooterContainer data-test="footer">
