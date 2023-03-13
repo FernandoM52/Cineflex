@@ -1,16 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { PageContainer, SeatsContainer, FormContainer, CaptionContainer, CaptionCircle, CaptionItem, SeatItem, FooterContainer, Loading } from "./styleSeatsPage";
 import loading from "../../assets/loading.gif";
 
 export default function SeatsPage() {
     const [seats, setSeats] = useState(undefined);
     const [ids, setIds] = useState([]);
+    const [selectedSeats, setSelectedSeats] = useState([]);
     const [name, setName] = useState("");
     const [cpf, setCpf] = useState("");
     const [formValid, setFormValid] = useState(false);
     const { idSessao } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`;
@@ -31,10 +33,13 @@ export default function SeatsPage() {
         }
         if (!isSelected && seat.isAvailable === true) {
             setIds([...ids, seat.id]);
+            setSelectedSeats([...selectedSeats, seat.name])
         } else {
             setIds(ids.filter(id => id !== seat.id));
+            setSelectedSeats(selectedSeats.filter(name => name !== seat.name));
         }
     };
+    console.log(selectedSeats)
 
     function validateCpf(e) {
         const cpfValue = e.target.value.replace(/[^\d]/g, "");
@@ -52,14 +57,16 @@ export default function SeatsPage() {
         e.preventDefault();
         const urlPost = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
         const postObject = { ids, name, cpf };
+        const info = { seats, selectedSeats, name, cpf };
+        console.log(info)
 
         if (formValid && ids.length > 0) {
             const promisse = axios.post(urlPost, postObject);
-            promisse.then(res => alert("Assentos foram reservados"))
-            promisse.catch(err => console.log(err.response.data));
+            promisse.then(res => navigate("/sucesso", { state: info }));
         } else {
             alert("Verifique se os campos estão preenchidos corretamente e se foi selecionado um assento dispnível.");
         }
+
     };
 
     return (
