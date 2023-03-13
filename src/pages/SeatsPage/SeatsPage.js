@@ -23,7 +23,7 @@ export default function SeatsPage() {
 
     if (seats === undefined) {
         return <Loading src={loading} />
-    };
+    }
 
     function selectSeatClick(seat) {
         const isSelected = ids.includes(seat.id);
@@ -38,36 +38,33 @@ export default function SeatsPage() {
             setIds(ids.filter(id => id !== seat.id));
             setSelectedSeats(selectedSeats.filter(name => name !== seat.name));
         }
-    };
-    console.log(selectedSeats)
+    }
 
     function validateCpf(e) {
         const cpfValue = e.target.value.replace(/[^\d]/g, "");
-
-        if (cpfValue.length !== 11) {
+        const cpfLength = 11;
+        if (cpfValue.length !== cpfLength) {
             setFormValid(false);
         } else {
             setFormValid(!!name && !!cpfValue);
         }
 
         setCpf(cpfValue);
-    };
+    }
 
     function reserveSeats(e) {
         e.preventDefault();
         const urlPost = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
         const postObject = { ids, name, cpf };
         const info = { seats, selectedSeats, name, cpf };
-        console.log(info)
 
         if (formValid && ids.length > 0) {
             const promisse = axios.post(urlPost, postObject);
-            promisse.then(res => navigate("/sucesso", { state: info }));
+            promisse.then(navigate("/sucesso", { state: info }));
         } else {
             alert("Verifique se os campos estão preenchidos corretamente e se foi selecionado um assento dispnível.");
         }
-
-    };
+    }
 
     return (
         <PageContainer>

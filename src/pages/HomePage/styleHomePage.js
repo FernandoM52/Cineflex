@@ -18,6 +18,9 @@ export const ListContainer = styled.ul`
     flex-wrap: wrap;
     flex-direction: row;
     padding: 10px;
+    a{
+        cursor: default;
+    }
 `;
 
 export const MovieContainer = styled.li`
@@ -34,6 +37,7 @@ export const MovieContainer = styled.li`
         height: 190px;
     }
     &:hover{
+        cursor: pointer;
         background-color: #E8833A;
     }
 `;

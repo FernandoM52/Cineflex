@@ -17,7 +17,7 @@ export default function SessionsPage() {
 
     if (sessions === undefined) {
         return <Loading src={loading} />
-    }
+    };
 
     return (
         <PageContainer>

@@ -13,13 +13,13 @@ export default function SuccessPage() {
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
-            <TextContainer>
+            <TextContainer data-test="movie-info">
                 <strong><p>Filme e sessão</p></strong>
                 <p>{seats.movie.title}</p>
                 <p>{seats.day.date} - {seats.name}</p>
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="seats-info">
                 <strong><p>Ingressos</p></strong>
 
                 {selectedSeats.map((s) => (
@@ -28,7 +28,7 @@ export default function SuccessPage() {
 
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="client-info">
                 <strong><p>Comprador</p></strong>
                 <p>Nome: {name}</p>
                 <p>CPF: {formatCPF(cpf)}</p>

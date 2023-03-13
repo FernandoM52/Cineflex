@@ -16,7 +16,7 @@ export default function HomePage() {
 
     if (listaFilmes === undefined) {
         return <Loading src={loading} />
-    }
+    };
 
     return (
         <PageContainer>

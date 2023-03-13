@@ -41,11 +41,3 @@ export const TextContainer = styled.div`
         margin-bottom: 10px;
     }
 `;
-
-export const Loading = styled.img`
-margin: 0 auto;
-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-`;

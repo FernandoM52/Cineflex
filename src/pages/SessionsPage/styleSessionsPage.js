@@ -33,10 +33,13 @@ export const ButtonsContainer = styled.div`
         margin-right: 20px;
         &:hover {
             background-color: #C3CFD9;
+            cursor: pointer;
         }
     }
     a {
+        width: 100%;
         text-decoration: none;
+        cursor: default;
     }
 `;
 

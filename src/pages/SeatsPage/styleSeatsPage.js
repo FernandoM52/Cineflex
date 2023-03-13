@@ -33,6 +33,9 @@ export const FormContainer = styled.form`
     button {
         align-self: center;
         cursor: pointer;
+        &:hover {
+            background-color: #C3CFD9;
+        }
     }
     input {
         width: calc(100vw - 60px);
